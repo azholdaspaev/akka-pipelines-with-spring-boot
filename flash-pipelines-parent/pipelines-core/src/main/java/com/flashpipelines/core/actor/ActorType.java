@@ -5,7 +5,8 @@ import akka.actor.Actor;
 public enum ActorType {
 
     SIMPLE_ACTOR(SimpleActor.class, "simpleActor"),
-    ENDING_ACTOR(EndingActor.class, "endingActor");
+    FINALIZER_ACTOR(FinalizerActor.class, "finalizerActor"),
+    SUPERVISER_ACTOR(SuperviserActor.class, "superviserActor");
 
     private final Class<? extends Actor> actorClass;
     private final String actorBeanName;

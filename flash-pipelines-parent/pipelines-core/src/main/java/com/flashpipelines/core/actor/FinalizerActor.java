@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value = "prototype")
-public class EndingActor extends AbstractActor {
+public class FinalizerActor extends AbstractActor {
 
     private final Service service;
 
-    public EndingActor(Service service) {
+    public FinalizerActor(Service service) {
         this.service = service;
     }
 

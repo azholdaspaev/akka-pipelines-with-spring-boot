@@ -1,7 +1,7 @@
 package com.flashpipelines.core.actor;
 
 import akka.actor.AbstractActor;
-import akka.routing.Router;
+import akka.actor.ActorRef;
 import com.flashpipelines.core.Envelope;
 import com.flashpipelines.core.Service;
 import org.springframework.context.annotation.Scope;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class SimpleActor extends AbstractActor {
 
     private final Service service;
-    private final Router nextRoute;
+    private final ActorRef sendTo;
 
-    public SimpleActor(Service service, Router nextRoute) {
+    public SimpleActor(Service service, ActorRef sendTo) {
         this.service = service;
-        this.nextRoute = nextRoute;
+        this.sendTo = sendTo;
     }
 
     @Override
@@ -27,6 +27,6 @@ public class SimpleActor extends AbstractActor {
     }
 
     private void apply(Envelope envelope) {
-        nextRoute.route(service.apply(envelope), getSelf());
+        sendTo.tell(service.apply(envelope), getSelf());
     }
 }

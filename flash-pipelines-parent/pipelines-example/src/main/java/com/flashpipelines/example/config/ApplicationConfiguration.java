@@ -4,7 +4,6 @@ import akka.actor.ActorSystem;
 import com.flashpipelines.core.boot.SpringExtension;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +16,7 @@ import org.springframework.context.annotation.Import;
 public class ApplicationConfiguration {
 
     @Bean
-    public SpringExtension springExtension(@Autowired ApplicationContext applicationContext) {
+    public SpringExtension springExtension(ApplicationContext applicationContext) {
         return new SpringExtension(applicationContext);
     }
 
