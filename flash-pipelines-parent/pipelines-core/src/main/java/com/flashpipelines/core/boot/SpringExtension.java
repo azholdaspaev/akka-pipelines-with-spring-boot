@@ -1,11 +1,14 @@
 package com.flashpipelines.core.boot;
 
+import akka.actor.ActorRef;
 import akka.actor.Extension;
 import akka.actor.Props;
-import akka.routing.Router;
 import com.flashpipelines.core.Service;
-import com.flashpipelines.core.pipeline.ActorReferencePipeline;
+import com.flashpipelines.core.actor.ActorReference;
+import com.flashpipelines.core.actor.ActorType;
 import org.springframework.context.ApplicationContext;
+
+import java.util.List;
 
 public class SpringExtension implements Extension {
 
@@ -15,19 +18,15 @@ public class SpringExtension implements Extension {
         this.applicationContext = applicationContext;
     }
 
-    public Props props(String actorBeanName) {
-        return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, null, null);
+    public Props props(Service service) {
+        return Props.create(SpringActorProducer.class, applicationContext, ActorType.FINALIZER_ACTOR, service);
     }
 
-    public Props props(String actorBeanName, Service service) {
-        return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, service, null, null);
+    public Props props(Service service, ActorRef sendTo) {
+        return Props.create(SpringActorProducer.class, applicationContext, ActorType.SIMPLE_ACTOR, service, sendTo);
     }
 
-    public Props props(String actorBeanName, Service service, Router router) {
-        return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, service, router, null, null);
-    }
-
-    public Props props(String actorBeanName, ActorReferencePipeline actorReferencePipeline, SpringExtension springExtension) {
-        return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, null, null, actorReferencePipeline, springExtension);
+    public Props props(List<ActorReference> actorReferences) {
+        return Props.create(SpringActorProducer.class, applicationContext, ActorType.SUPERVISER_ACTOR, actorReferences, this);
     }
 }

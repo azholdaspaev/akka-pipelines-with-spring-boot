@@ -24,6 +24,10 @@ public class ActorReference {
         return service;
     }
 
+    public int getNumberOfActors() {
+        return configuration.getNumberOfActors();
+    }
+
     public String getName() {
         return configuration.getName();
     }
@@ -32,6 +36,7 @@ public class ActorReference {
     @NoArgsConstructor
     protected static class Configuration {
         private ActorType actorType;
+        private int numberOfActors;
         private String name;
     }
 }

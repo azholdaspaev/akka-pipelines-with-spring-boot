@@ -1,14 +1,17 @@
 package com.flashpipelines.example.config;
 
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.routing.RoundRobinPool;
 import com.flashpipelines.core.Service;
 import com.flashpipelines.core.actor.ActorReference;
-import com.flashpipelines.core.pipeline.ActorReferencePipeline;
+import com.flashpipelines.core.boot.SpringExtension;
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class PipelineConfiguration {
@@ -66,11 +69,19 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public ActorReferencePipeline pipeline(ActorReference firstActor,
-                                           ActorReference secondActor,
-                                           ActorReference thirdActor,
-                                           ActorReference fourthActor) {
+    public List<ActorReference> pipeline(ActorReference firstActor,
+                                         ActorReference secondActor,
+                                         ActorReference thirdActor,
+                                         ActorReference fourthActor) {
 
-        return new ActorReferencePipeline(Arrays.asList(firstActor, secondActor, thirdActor, fourthActor), ConfigFactory.empty());
+        return Arrays.asList(firstActor, secondActor, thirdActor, fourthActor);
+    }
+
+    @Bean
+    public ActorRef pipelineRouter(List<ActorReference> pipeline,
+                                   ActorSystem actorSystem,
+                                   SpringExtension springExtension) {
+
+        return actorSystem.actorOf(springExtension.props(pipeline).withRouter(new RoundRobinPool(1)), "superviser");
     }
 }
