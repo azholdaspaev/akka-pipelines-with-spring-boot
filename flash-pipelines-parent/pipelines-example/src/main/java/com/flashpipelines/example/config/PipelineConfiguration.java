@@ -24,7 +24,7 @@ public class PipelineConfiguration {
     @Bean
     public Service firstActorService() {
         return envelope -> {
-            System.out.println("1");
+            envelope.increment();
             return envelope;
         };
     }
@@ -37,7 +37,7 @@ public class PipelineConfiguration {
     @Bean
     public Service secondActorService() {
         return envelope -> {
-            System.out.println("2");
+            envelope.increment();
             return envelope;
         };
     }
@@ -50,7 +50,7 @@ public class PipelineConfiguration {
     @Bean
     public Service thirdActorService() {
         return envelope -> {
-            System.out.println("3");
+            envelope.increment();
             return envelope;
         };
     }
@@ -63,7 +63,7 @@ public class PipelineConfiguration {
     @Bean
     public Service fourthActorService() {
         return envelope -> {
-            System.out.println("4");
+            envelope.increment();
             return envelope;
         };
     }

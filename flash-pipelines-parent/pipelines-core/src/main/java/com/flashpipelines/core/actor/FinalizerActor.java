@@ -19,7 +19,11 @@ public class FinalizerActor extends AbstractActor {
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-            .match(Envelope.class, service::apply)
+            .match(Envelope.class, envelope -> {
+                service.apply(envelope);
+
+                envelope.completeFuture();
+            })
             .build();
     }
 }
