@@ -1,14 +1,9 @@
 package com.flashpipelines.core.boot;
 
 import akka.actor.Actor;
-import akka.actor.ActorRef;
 import akka.actor.IndirectActorProducer;
-import com.flashpipelines.core.Service;
-import com.flashpipelines.core.actor.ActorReference;
 import com.flashpipelines.core.actor.ActorType;
 import org.springframework.context.ApplicationContext;
-
-import java.util.List;
 
 public class SpringActorProducer implements IndirectActorProducer {
 
@@ -16,22 +11,10 @@ public class SpringActorProducer implements IndirectActorProducer {
     private final ActorType actorType;
     private final Object[] args;
 
-    public SpringActorProducer(ApplicationContext applicationContext, ActorType actorType, Service service) {
+    public SpringActorProducer(ApplicationContext applicationContext, ActorType actorType, Object[] args) {
         this.applicationContext = applicationContext;
         this.actorType = actorType;
-        this.args = new Object[] {service};
-    }
-
-    public SpringActorProducer(ApplicationContext applicationContext, ActorType actorType, Service service, ActorRef actorRef) {
-        this.applicationContext = applicationContext;
-        this.actorType = actorType;
-        this.args = new Object[] {service, actorRef};
-    }
-
-    public SpringActorProducer(ApplicationContext applicationContext, ActorType actorType, List<ActorReference> actorReferences, SpringExtension springExtension) {
-        this.applicationContext = applicationContext;
-        this.actorType = actorType;
-        this.args = new Object[] {actorReferences, springExtension};
+        this.args = args;
     }
 
     @Override
