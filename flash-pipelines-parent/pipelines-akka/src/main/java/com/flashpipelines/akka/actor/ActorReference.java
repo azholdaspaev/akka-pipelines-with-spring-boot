@@ -1,6 +1,6 @@
-package com.flashpipelines.core.actor;
+package com.flashpipelines.akka.actor;
 
-import com.flashpipelines.core.Service;
+import com.flashpipelines.akka.Service;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigBeanFactory;
 import lombok.Data;

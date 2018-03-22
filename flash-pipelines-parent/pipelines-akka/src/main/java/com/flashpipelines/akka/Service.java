@@ -1,4 +1,4 @@
-package com.flashpipelines.core;
+package com.flashpipelines.akka;
 
 @FunctionalInterface
 public interface Service {

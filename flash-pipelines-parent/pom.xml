@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>pipelines-core</module>
+        <module>pipelines-akka</module>
         <module>pipelines-example</module>
     </modules>
 

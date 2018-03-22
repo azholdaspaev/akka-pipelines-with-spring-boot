@@ -1,11 +1,11 @@
-package com.flashpipelines.core.actor;
+package com.flashpipelines.akka.actor;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.routing.RoundRobinPool;
-import com.flashpipelines.core.Envelope;
-import com.flashpipelines.core.boot.SpringExtension;
+import com.flashpipelines.akka.Envelope;
+import com.flashpipelines.akka.boot.SpringExtension;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

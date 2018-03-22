@@ -1,10 +1,10 @@
-package com.flashpipelines.core.actor;
+package com.flashpipelines.akka.actor;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.pattern.PatternsCS;
-import com.flashpipelines.core.AsyncService;
-import com.flashpipelines.core.Envelope;
+import com.flashpipelines.akka.AsyncService;
+import com.flashpipelines.akka.Envelope;
 
 public class AsyncActor extends AbstractActor {
 

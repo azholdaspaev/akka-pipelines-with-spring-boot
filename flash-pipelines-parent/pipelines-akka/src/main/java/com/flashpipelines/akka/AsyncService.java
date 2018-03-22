@@ -1,4 +1,4 @@
-package com.flashpipelines.core;
+package com.flashpipelines.akka;
 
 import java.util.concurrent.CompletableFuture;
 

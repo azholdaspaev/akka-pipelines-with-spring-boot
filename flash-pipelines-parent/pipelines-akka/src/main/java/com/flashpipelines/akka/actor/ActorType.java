@@ -1,4 +1,4 @@
-package com.flashpipelines.core.actor;
+package com.flashpipelines.akka.actor;
 
 import akka.actor.Actor;
 

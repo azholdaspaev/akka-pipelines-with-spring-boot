@@ -1,8 +1,8 @@
-package com.flashpipelines.core.boot;
+package com.flashpipelines.akka.boot;
 
 import akka.actor.Actor;
 import akka.actor.IndirectActorProducer;
-import com.flashpipelines.core.actor.ActorType;
+import com.flashpipelines.akka.actor.ActorType;
 import org.springframework.context.ApplicationContext;
 
 public class SpringActorProducer implements IndirectActorProducer {
