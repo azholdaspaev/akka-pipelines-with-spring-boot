@@ -1,7 +1,7 @@
 package com.flashpipelines.example;
 
 import akka.actor.ActorRef;
-import com.flashpipelines.core.Envelope;
+import com.flashpipelines.core.envelope.DummyEnvelope;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -16,6 +16,6 @@ public class Application {
 
         ActorRef supervisor = (ActorRef) context.getBean("pipelineRouter");
 
-        IntStream.range(0, 1).forEach(i -> supervisor.tell(new Envelope(), null));
+        IntStream.range(0, 1).forEach(i -> supervisor.tell(new DummyEnvelope(), null));
     }
 }

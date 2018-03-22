@@ -1,7 +1,7 @@
 package com.flashpipelines.example.config;
 
 import akka.actor.ActorSystem;
-import com.flashpipelines.core.boot.SpringExtension;
+import com.flashpipelines.akka.boot.SpringExtension;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.springframework.context.ApplicationContext;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan(basePackages = "com.flashpipelines.core")
+@ComponentScan(basePackages = "com.flashpipelines")
 @Import(value = PipelineConfiguration.class)
 public class ApplicationConfiguration {
 

@@ -1,6 +1,7 @@
 package com.flashpipelines.akka.actor;
 
-import com.flashpipelines.akka.Service;
+import com.flashpipelines.core.Envelope;
+import com.flashpipelines.core.Service;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigBeanFactory;
 import lombok.Data;
@@ -9,18 +10,14 @@ import lombok.NoArgsConstructor;
 public class ActorReference {
 
     private final Configuration configuration;
-    private final Service service;
+    private final Service<Envelope, Envelope> service;
 
-    public ActorReference(Config config, Service service) {
+    public ActorReference(Config config, Service<Envelope, Envelope> service) {
         this.configuration = ConfigBeanFactory.create(config, Configuration.class);
         this.service = service;
     }
 
-    public ActorType getActorType() {
-        return configuration.getActorType();
-    }
-
-    public Service getService() {
+    public Service<Envelope, Envelope> getService() {
         return service;
     }
 
@@ -35,7 +32,6 @@ public class ActorReference {
     @Data
     @NoArgsConstructor
     protected static class Configuration {
-        private ActorType actorType;
         private int numberOfActors;
         private String name;
     }

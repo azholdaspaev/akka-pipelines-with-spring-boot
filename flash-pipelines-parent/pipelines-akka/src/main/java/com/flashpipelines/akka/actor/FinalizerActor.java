@@ -1,8 +1,8 @@
 package com.flashpipelines.akka.actor;
 
 import akka.actor.AbstractActor;
-import com.flashpipelines.akka.Envelope;
-import com.flashpipelines.akka.Service;
+import com.flashpipelines.core.Envelope;
+import com.flashpipelines.core.Service;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Scope(value = "prototype")
 public class FinalizerActor extends AbstractActor {
 
-    private final Service service;
+    private final Service<Envelope, Envelope> service;
 
-    public FinalizerActor(Service service) {
+    public FinalizerActor(Service<Envelope, Envelope> service) {
         this.service = service;
     }
 

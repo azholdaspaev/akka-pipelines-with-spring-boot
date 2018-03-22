@@ -2,8 +2,8 @@ package com.flashpipelines.akka.actor;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
-import com.flashpipelines.akka.Envelope;
-import com.flashpipelines.akka.Service;
+import com.flashpipelines.core.Envelope;
+import com.flashpipelines.core.Service;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Scope(value = "prototype")
 public class SimpleActor extends AbstractActor {
 
-    private final Service service;
+    private final Service<Envelope, Envelope> service;
     private final ActorRef sendTo;
 
-    public SimpleActor(Service service, ActorRef sendTo) {
+    public SimpleActor(Service<Envelope, Envelope> service, ActorRef sendTo) {
         this.service = service;
         this.sendTo = sendTo;
     }

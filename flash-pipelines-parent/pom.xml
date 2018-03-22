@@ -6,9 +6,11 @@
     <groupId>com.flashpipelines</groupId>
     <artifactId>flash-pipelines-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <name>Flash Pipelines</name>
     <packaging>pom</packaging>
 
     <modules>
+        <module>pipelines-core</module>
         <module>pipelines-akka</module>
         <module>pipelines-example</module>
     </modules>
