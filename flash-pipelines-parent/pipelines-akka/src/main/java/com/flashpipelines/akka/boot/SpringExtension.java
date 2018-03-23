@@ -28,6 +28,6 @@ public class SpringExtension implements Extension {
     }
 
     public Props props(List<ActorReference> actorReferences) {
-        return Props.create(SpringActorProducer.class, applicationContext, ActorType.SUPERVISER_ACTOR, new Object[] {actorReferences, this});
+        return Props.create(SpringActorProducer.class, applicationContext, ActorType.SUPERVISER_ACTOR, new Object[] {actorReferences});
     }
 }

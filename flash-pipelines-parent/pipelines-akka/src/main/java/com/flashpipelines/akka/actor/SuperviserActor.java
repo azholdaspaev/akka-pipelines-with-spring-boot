@@ -4,22 +4,21 @@ import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.routing.RoundRobinPool;
-import com.flashpipelines.akka.boot.SpringExtension;
 import com.flashpipelines.core.Envelope;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
 @Scope(value = "prototype")
 public class SuperviserActor extends AbstractActor {
 
-    private final SpringExtension springExtension;
     private final ActorRef sendTo;
 
-    public SuperviserActor(List<ActorReference> actorReferences, SpringExtension springExtension) {
-        this.springExtension = springExtension;
+    public SuperviserActor(List<ActorReference> actorReferences) {
         this.sendTo = buildPipelineRoute(actorReferences);
     }
 
@@ -32,30 +31,20 @@ public class SuperviserActor extends AbstractActor {
     }
 
     private ActorRef buildPipelineRoute(List<ActorReference> actorReferences) {
-        ActorRef actor = buildActor(actorReferences.get(actorReferences.size() - 1));
-        getContext().watch(actor);
+        List<ActorReference> reversedActorReferences = new ArrayList<>(actorReferences);
+        Collections.reverse(reversedActorReferences);
 
-        ActorRef router = actor;
-        for (int i = actorReferences.size() - 2; i >=0; i--) {
-            ActorRef routees = buildActor(actorReferences.get(i), router);
-            getContext().watch(routees);
-
-            router = routees;
+        ActorRef sendTo = null;
+        for (ActorReference actorReference : reversedActorReferences) {
+            sendTo = buildActor(actorReference, sendTo);
+            getContext().watch(sendTo);
         }
-
-        return router;
-    }
-
-    private ActorRef buildActor(ActorReference actorReference) {
-        Props props = new RoundRobinPool(actorReference.getNumberOfActors())
-            .props(springExtension.props(actorReference.getService()));
-
-        return getContext().actorOf(props, actorReference.getName());
+        return sendTo;
     }
 
     private ActorRef buildActor(ActorReference actorReference, ActorRef router) {
         Props props = new RoundRobinPool(actorReference.getNumberOfActors())
-            .props(springExtension.props(actorReference.getService(), router));
+            .props(actorReference.getPropsBuilder().build(router));
 
         return getContext().actorOf(props, actorReference.getName());
     }

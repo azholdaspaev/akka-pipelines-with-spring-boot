@@ -5,6 +5,8 @@ import akka.actor.ActorSystem;
 import akka.routing.RoundRobinPool;
 import com.flashpipelines.akka.actor.ActorReference;
 import com.flashpipelines.akka.boot.SpringExtension;
+import com.flashpipelines.akka.builder.PropsBuilder;
+import com.flashpipelines.core.Envelope;
 import com.flashpipelines.core.Service;
 import com.typesafe.config.Config;
 import org.springframework.context.annotation.Bean;
@@ -17,55 +19,75 @@ import java.util.List;
 public class PipelineConfiguration {
 
     @Bean(name = "firstActor")
-    public ActorReference firstActor(Config akkaConfiguration, Service firstActorService) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.first"), firstActorService);
+    public ActorReference firstActor(Config akkaConfiguration, PropsBuilder firstPropsBuilder) {
+        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.first"), firstPropsBuilder);
     }
 
     @Bean
-    public Service firstActorService() {
+    public Service<Envelope, Envelope> firstActorService() {
         return envelope -> {
             System.out.println("1");
             return envelope;
         };
     }
 
+    @Bean
+    public PropsBuilder firstPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> firstActorService) {
+        return sendTo -> springExtension.props(firstActorService, sendTo);
+    }
+
     @Bean(name = "secondActor")
-    public ActorReference secondActor(Config akkaConfiguration, Service secondActorService) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.second"), secondActorService);
+    public ActorReference secondActor(Config akkaConfiguration, PropsBuilder secondPropsBuilder) {
+        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.second"), secondPropsBuilder);
     }
 
     @Bean
-    public Service secondActorService() {
+    public Service<Envelope, Envelope> secondActorService() {
         return envelope -> {
             System.out.println("2");
             return envelope;
         };
     }
 
+    @Bean
+    public PropsBuilder secondPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> secondActorService) {
+        return sendTo -> springExtension.props(secondActorService, sendTo);
+    }
+
     @Bean(name = "thirdActor")
-    public ActorReference thirdActor(Config akkaConfiguration, Service thirdActorService) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.third"), thirdActorService);
+    public ActorReference thirdActor(Config akkaConfiguration, PropsBuilder thirdPropsBuilder) {
+        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.third"), thirdPropsBuilder);
     }
 
     @Bean
-    public Service thirdActorService() {
+    public Service<Envelope, Envelope> thirdActorService() {
         return envelope -> {
             System.out.println("3");
             return envelope;
         };
     }
 
+    @Bean
+    public PropsBuilder thirdPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> thirdActorService) {
+        return sendTo -> springExtension.props(thirdActorService, sendTo);
+    }
+
     @Bean(name = "fourthActor")
-    public ActorReference fourthActor(Config akkaConfiguration, Service fourthActorService) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.fourth"), fourthActorService);
+    public ActorReference fourthActor(Config akkaConfiguration, PropsBuilder fourthPropsBuilder) {
+        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.fourth"), fourthPropsBuilder);
     }
 
     @Bean
-    public Service fourthActorService() {
+    public Service<Envelope, Envelope> fourthActorService() {
         return envelope -> {
             System.out.println("4");
             return envelope;
         };
+    }
+
+    @Bean
+    public PropsBuilder fourthPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> fourthActorService) {
+        return sendTo -> springExtension.props(fourthActorService);
     }
 
     @Bean
