@@ -5,6 +5,7 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.routing.FromConfig;
 import com.flashpipelines.akka.actor.ActorReference;
+import com.flashpipelines.akka.actor.AsyncActor;
 import com.flashpipelines.akka.actor.FinalizerActor;
 import com.flashpipelines.akka.actor.SimpleActor;
 import com.flashpipelines.akka.actor.SuperviserActor;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Configuration
 public class PipelineConfiguration {
@@ -63,16 +65,16 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public Service<Envelope, Envelope> thirdActorService() {
+    public Service<Envelope, CompletableFuture<Envelope>> thirdActorService() {
         return envelope -> {
             System.out.println("3");
-            return envelope;
+            return CompletableFuture.completedFuture(envelope);
         };
     }
 
     @Bean
-    public PropsBuilder thirdPropsBuilder(Service<Envelope, Envelope> thirdActorService) {
-        return sendTo -> SimpleActor.props(thirdActorService, sendTo);
+    public PropsBuilder thirdPropsBuilder(Service<Envelope, CompletableFuture<Envelope>> thirdActorService) {
+        return sendTo -> AsyncActor.props(thirdActorService, sendTo);
     }
 
     @Bean(name = "fourthActor")
