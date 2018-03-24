@@ -2,6 +2,7 @@ package com.flashpipelines.akka.actor;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.pattern.PatternsCS;
 import com.flashpipelines.core.Envelope;
 import com.flashpipelines.core.Service;
@@ -13,9 +14,13 @@ public class AsyncActor extends AbstractActor {
     private final Service<Envelope, CompletableFuture<Envelope>> service;
     private final ActorRef sendTo;
 
-    public AsyncActor(Service<Envelope, CompletableFuture<Envelope>> service, ActorRef sendTo) {
+    private AsyncActor(Service<Envelope, CompletableFuture<Envelope>> service, ActorRef sendTo) {
         this.service = service;
         this.sendTo = sendTo;
+    }
+
+    public static Props props(Service<Envelope, CompletableFuture<Envelope>> service, ActorRef sendTo) {
+        return Props.create(AsyncActor.class, service, sendTo);
     }
 
     @Override

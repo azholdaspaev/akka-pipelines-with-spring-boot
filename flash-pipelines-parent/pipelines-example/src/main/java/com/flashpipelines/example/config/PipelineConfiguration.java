@@ -2,10 +2,13 @@ package com.flashpipelines.example.config;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import akka.routing.RoundRobinPool;
+import akka.actor.Props;
+import akka.routing.FromConfig;
 import com.flashpipelines.akka.actor.ActorReference;
-import com.flashpipelines.akka.boot.SpringExtension;
-import com.flashpipelines.akka.builder.PropsBuilder;
+import com.flashpipelines.akka.actor.FinalizerActor;
+import com.flashpipelines.akka.actor.SimpleActor;
+import com.flashpipelines.akka.actor.SuperviserActor;
+import com.flashpipelines.akka.props.PropsBuilder;
 import com.flashpipelines.core.Envelope;
 import com.flashpipelines.core.Service;
 import com.typesafe.config.Config;
@@ -32,8 +35,8 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public PropsBuilder firstPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> firstActorService) {
-        return sendTo -> springExtension.props(firstActorService, sendTo);
+    public PropsBuilder firstPropsBuilder(Service<Envelope, Envelope> firstActorService) {
+        return sendTo -> SimpleActor.props(firstActorService, sendTo);
     }
 
     @Bean(name = "secondActor")
@@ -50,8 +53,8 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public PropsBuilder secondPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> secondActorService) {
-        return sendTo -> springExtension.props(secondActorService, sendTo);
+    public PropsBuilder secondPropsBuilder(Service<Envelope, Envelope> secondActorService) {
+        return sendTo -> SimpleActor.props(secondActorService, sendTo);
     }
 
     @Bean(name = "thirdActor")
@@ -68,8 +71,8 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public PropsBuilder thirdPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> thirdActorService) {
-        return sendTo -> springExtension.props(thirdActorService, sendTo);
+    public PropsBuilder thirdPropsBuilder(Service<Envelope, Envelope> thirdActorService) {
+        return sendTo -> SimpleActor.props(thirdActorService, sendTo);
     }
 
     @Bean(name = "fourthActor")
@@ -86,8 +89,8 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public PropsBuilder fourthPropsBuilder(SpringExtension springExtension, Service<Envelope, Envelope> fourthActorService) {
-        return sendTo -> springExtension.props(fourthActorService);
+    public PropsBuilder fourthPropsBuilder(Service<Envelope, Envelope> fourthActorService) {
+        return sendTo -> FinalizerActor.props(fourthActorService);
     }
 
     @Bean
@@ -100,10 +103,9 @@ public class PipelineConfiguration {
     }
 
     @Bean
-    public ActorRef pipelineRouter(List<ActorReference> pipeline,
-                                   ActorSystem actorSystem,
-                                   SpringExtension springExtension) {
+    public ActorRef pipelineRouter(List<ActorReference> pipeline, ActorSystem actorSystem) {
+        Props props = SuperviserActor.props(pipeline);
 
-        return actorSystem.actorOf(springExtension.props(pipeline).withRouter(new RoundRobinPool(1)), "superviser");
+        return actorSystem.actorOf(FromConfig.getInstance().props(props), "superviser");
     }
 }

@@ -1,4 +1,4 @@
-package com.flashpipelines.akka.builder;
+package com.flashpipelines.akka.props;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;

@@ -1,6 +1,8 @@
 package com.flashpipelines.akka.actor;
 
-import com.flashpipelines.akka.builder.PropsBuilder;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import com.flashpipelines.akka.props.PropsBuilder;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigBeanFactory;
 import lombok.Data;
@@ -16,12 +18,8 @@ public class ActorReference {
         this.propsBuilder = propsBuilder;
     }
 
-    public PropsBuilder getPropsBuilder() {
-        return propsBuilder;
-    }
-
-    public int getNumberOfActors() {
-        return configuration.getNumberOfActors();
+    public Props buildProps(ActorRef actorReference) {
+        return propsBuilder.build(actorReference);
     }
 
     public String getName() {
@@ -31,7 +29,6 @@ public class ActorReference {
     @Data
     @NoArgsConstructor
     protected static class Configuration {
-        private int numberOfActors;
         private String name;
     }
 }
