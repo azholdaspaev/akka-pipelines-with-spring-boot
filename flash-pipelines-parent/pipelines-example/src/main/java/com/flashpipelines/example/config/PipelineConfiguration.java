@@ -25,7 +25,7 @@ public class PipelineConfiguration {
 
     @Bean(name = "firstActor")
     public ActorReference firstActor(Config akkaConfiguration, PropsBuilder firstPropsBuilder) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.first"), firstPropsBuilder);
+        return new ActorReference(akkaConfiguration.getConfig("actor.pool.first"), firstPropsBuilder);
     }
 
     @Bean
@@ -43,7 +43,7 @@ public class PipelineConfiguration {
 
     @Bean(name = "secondActor")
     public ActorReference secondActor(Config akkaConfiguration, PropsBuilder secondPropsBuilder) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.second"), secondPropsBuilder);
+        return new ActorReference(akkaConfiguration.getConfig("actor.pool.second"), secondPropsBuilder);
     }
 
     @Bean
@@ -61,7 +61,7 @@ public class PipelineConfiguration {
 
     @Bean(name = "thirdActor")
     public ActorReference thirdActor(Config akkaConfiguration, PropsBuilder thirdPropsBuilder) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.third"), thirdPropsBuilder);
+        return new ActorReference(akkaConfiguration.getConfig("actor.pool.third"), thirdPropsBuilder);
     }
 
     @Bean
@@ -79,7 +79,7 @@ public class PipelineConfiguration {
 
     @Bean(name = "fourthActor")
     public ActorReference fourthActor(Config akkaConfiguration, PropsBuilder fourthPropsBuilder) {
-        return new ActorReference(akkaConfiguration.getConfig("pipeline.actor.pool.fourth"), fourthPropsBuilder);
+        return new ActorReference(akkaConfiguration.getConfig("actor.pool.fourth"), fourthPropsBuilder);
     }
 
     @Bean
