@@ -13,6 +13,7 @@
         <module>pipelines-core</module>
         <module>pipelines-akka</module>
         <module>pipelines-example</module>
+        <module>pipelines-configuration</module>
     </modules>
 
     <properties>

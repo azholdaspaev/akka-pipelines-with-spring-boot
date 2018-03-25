@@ -20,6 +20,12 @@
             <artifactId>pipelines-akka</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.flashpipelines</groupId>
+            <artifactId>pipelines-configuration</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
