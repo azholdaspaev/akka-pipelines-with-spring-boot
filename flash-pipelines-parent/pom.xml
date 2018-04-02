@@ -23,6 +23,8 @@
         <com.typesage.config.version>1.3.3</com.typesage.config.version>
 
         <org.projectlombok.config.version>1.16.20</org.projectlombok.config.version>
+
+        <io.dropwizard.metrics-core.version>4.0.2</io.dropwizard.metrics-core.version>
     </properties>
 
     <parent>
@@ -50,6 +52,12 @@
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok.config.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>${io.dropwizard.metrics-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
