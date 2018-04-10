@@ -10,14 +10,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class ConsoleMetricsReporter {
 
-    private final ConsoleReporter consoleReporter;
-
     public ConsoleMetricsReporter(MetricRegistry metricRegistry) {
-        this.consoleReporter = ConsoleReporter.forRegistry(metricRegistry)
+        ConsoleReporter consoleReporter = ConsoleReporter.forRegistry(metricRegistry)
             .convertRatesTo(TimeUnit.SECONDS)
             .convertDurationsTo(TimeUnit.MILLISECONDS)
             .build();
 
-        this.consoleReporter.start(10, TimeUnit.SECONDS);
+        consoleReporter.start(10, TimeUnit.SECONDS);
     }
 }
