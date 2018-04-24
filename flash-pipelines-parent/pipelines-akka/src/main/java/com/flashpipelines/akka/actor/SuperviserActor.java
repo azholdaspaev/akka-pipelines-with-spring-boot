@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SuperviserActor extends AbstractActor {
+/**
+ * Superviser actor.
+ */
+public final class SuperviserActor extends AbstractActor {
 
     private final ActorRef sendTo;
 
@@ -18,6 +21,12 @@ public class SuperviserActor extends AbstractActor {
         this.sendTo = buildPipelineRoute(actorReferences);
     }
 
+    /**
+     * Static factory for actor's {@link Props}.
+     *
+     * @param actorReferences pipeline of {@link ActorReference}
+     * @return new {@link Props} instance.
+     */
     public static Props props(List<ActorReference> actorReferences) {
         return Props.create(SuperviserActor.class, actorReferences);
     }

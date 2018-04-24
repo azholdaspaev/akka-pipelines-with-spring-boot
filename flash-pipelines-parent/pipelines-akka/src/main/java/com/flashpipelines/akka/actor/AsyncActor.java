@@ -9,7 +9,10 @@ import com.flashpipelines.core.Service;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncActor extends AbstractActor {
+/**
+ * Asynchronous actor type.
+ */
+public final class AsyncActor extends AbstractActor {
 
     private final Service<Envelope, CompletableFuture<Envelope>> service;
     private final ActorRef sendTo;
@@ -19,6 +22,13 @@ public class AsyncActor extends AbstractActor {
         this.sendTo = sendTo;
     }
 
+    /**
+     * Static factory for actor's {@link Props}.
+     *
+     * @param service async processing service
+     * @param sendTo the next actor in the pipeline
+     * @return new {@link Props} instance.
+     */
     public static Props props(Service<Envelope, CompletableFuture<Envelope>> service, ActorRef sendTo) {
         return Props.create(AsyncActor.class, service, sendTo);
     }

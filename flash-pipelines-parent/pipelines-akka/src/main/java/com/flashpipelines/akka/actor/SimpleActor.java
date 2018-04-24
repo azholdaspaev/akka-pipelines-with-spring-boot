@@ -6,7 +6,10 @@ import akka.actor.Props;
 import com.flashpipelines.core.Envelope;
 import com.flashpipelines.core.Service;
 
-public class SimpleActor extends AbstractActor {
+/**
+ * Actor type, which is processing message of type {@link Envelope} and send result to the next actor in pipeline.
+ */
+public final class SimpleActor extends AbstractActor {
 
     private final Service<Envelope, Envelope> service;
     private final ActorRef sendTo;
@@ -16,6 +19,13 @@ public class SimpleActor extends AbstractActor {
         this.sendTo = sendTo;
     }
 
+    /**
+     * Static factory for actor's {@link Props}.
+     *
+     * @param service processing service
+     * @param sendTo the next actor in the pipeline
+     * @return new {@link Props} instance.
+     */
     public static Props props(Service<Envelope, Envelope> service, ActorRef sendTo) {
         return Props.create(SimpleActor.class, service, sendTo);
     }

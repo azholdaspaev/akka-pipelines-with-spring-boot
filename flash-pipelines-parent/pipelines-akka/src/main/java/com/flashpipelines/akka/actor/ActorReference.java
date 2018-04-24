@@ -8,6 +8,9 @@ import com.typesafe.config.ConfigBeanFactory;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Contains information for actor configuration.
+ */
 public class ActorReference {
 
     private final Configuration configuration;
@@ -18,6 +21,11 @@ public class ActorReference {
         this.propsBuilder = propsBuilder;
     }
 
+    /**
+     * Builds {@link Props}.
+     *
+     * @param actorReference actor, which will receive messages.
+     */
     public Props buildProps(ActorRef actorReference) {
         return propsBuilder.build(actorReference);
     }
@@ -26,6 +34,9 @@ public class ActorReference {
         return configuration.getName();
     }
 
+    /**
+     * Configuration.
+     */
     @Data
     @NoArgsConstructor
     protected static class Configuration {

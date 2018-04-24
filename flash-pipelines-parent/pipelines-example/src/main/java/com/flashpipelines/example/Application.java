@@ -8,9 +8,15 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.stream.IntStream;
 
+/**
+ * Application.
+ */
 @SpringBootApplication
 public class Application {
 
+    /**
+     * Application entry point.
+     */
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(Application.class, args);
 
